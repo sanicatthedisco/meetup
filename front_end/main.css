@@ -1,3 +1,6 @@
+* {
+  font-family: 'Merriweather Sans', sans-serif;
+}
 
 body {
     padding: 0px;
@@ -16,6 +19,7 @@ ul {
     font-size:50px;
     text-align:center;
     color:#0053d8;
+    font-family: 'Rammetto One', cursive;
 }
 
 form {
@@ -55,13 +59,13 @@ input {
 
 #group {
   position: fixed;
-  top: 20%;
+  top: 32%;
   right: 4%;
   border-radius: 3px;
   background-color: #77d3f7;
   padding: 5px;
   list-style-position: outside;
-} 
+}
 
 #group li {
   border-radius: 2px;
