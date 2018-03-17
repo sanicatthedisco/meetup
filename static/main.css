@@ -1,0 +1,187 @@
+* {
+  font-family: 'Merriweather Sans', sans-serif;
+}
+
+body {
+    padding: 0px;
+    margin: 0px;
+}
+
+section {
+    position:absolute;
+    overflow:hidden;
+}
+
+ul {
+    list-style-type: none;
+    padding:0;
+    margin:0;
+}
+
+#maintitle {
+    box-shadow: inset 0 0 0 1000px rgba(226,237,255,.6);
+    background-image:url(https://i0.wp.com/briffly.com/wp-content/uploads/Google-Maps.jpg?fit=2502%2C1313&ssl=1);
+    margin:0px;
+    padding:4px;
+    font-size:50px;
+    text-align:center;
+    color:#0053d8;
+    font-family: 'Rammetto One', cursive;
+}
+
+form {
+    font-size:18px;
+    display:inline;
+}
+
+#navbar {
+    background-color:#77d3f7;
+    padding: 1%;
+}
+
+a {
+    text-decoration:none;
+    color:black;
+}
+
+#addfriendsform {
+    float:right;
+}
+#username,#password,#addfriend {
+  border-radius: 10px;
+}
+
+input {
+    border:1px solid black;
+}
+
+#map {
+  width: 100%;
+  height: 60%;
+  position: absolute;
+  overflow: hidden;
+}
+
+#places {
+  bottom:0;
+  padding: 5px 0 5px 0 0;
+  width:100%;
+}
+
+#placestable {
+    width:100%;
+}
+
+#group, #friends {
+  position:absolute;
+  top 0;
+  right 0;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  background-color: #77d3f7;
+  padding: 10px;
+  list-style-position: outside;
+  height: 210px;
+  overflow: hidden;
+}
+
+#group p,#friends p {
+  /*background-color: #0053d8;*/
+  color: #0053d8;
+  text-align: center;
+  position: relative;
+  right: auto;
+  padding: 5px;
+}
+
+#groupcontainer {
+    position:absolute;
+    right: 20px;
+    top: 30%;
+}
+
+#friendscontainer {
+    position:absolute;
+    left: 15px;
+    top: 30%;
+}
+
+#friends button {
+    background-color:#e2edff;
+}
+
+#friendtoggle {
+    color:#77d3f7;
+}
+
+#friend p {
+    display:inline;
+    padding:0;
+    margin: 0;
+}
+
+.checkcontainer {
+  display: inline;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.checkcontainer input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+  border:1px solid black;
+}
+
+/* On mouse-over, add a grey background color */
+.checkcontainer:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.checkcontainer input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.checkcontainer input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.checkcontainer .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
