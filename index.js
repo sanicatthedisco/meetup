@@ -20,6 +20,7 @@ http.listen(3000, function () {
 //socket stuff
 
 var loginSuccess;
+var name;
 
 io.on("connection", function(socket) {
     console.log("A user has connectd with the id of " + socket.id);
@@ -32,16 +33,20 @@ io.on("connection", function(socket) {
             for (var i = 0; i < result.length; i ++) {
                 if (result[i]["username"] == credentials.username && result[i]["password"] == credentials.password) {
                     loginSuccess = true;
+                    var name = result[i]["name"];
                 }
             }
             
             if (loginSuccess) {
-                console.log("Logged in successfully!");
+                socket.emit("login success", {
+                    username: credentials.username,
+                    name: name
+                });
             } else {
-                console.log("Incorrect login.");
+                socket.emit("login failure", {
+                    reason: "Incorrect username or password"
+                });
             }
-            
-            
         });
     });
 });
