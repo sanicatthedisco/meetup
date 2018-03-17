@@ -12,3 +12,17 @@ ul {
     text-align:center;
     color:#77d3f7;
 }
+
+form {
+    display:inline;
+}
+
+#navbar {
+    background-color:#77d3f7;
+    padding: 2%;
+}
+
+a {
+    text-decoration:none;
+    color:black; 
+}
