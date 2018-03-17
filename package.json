@@ -1,0 +1,19 @@
+{
+  "name": "meetup",
+  "version": "1.0.0",
+  "description": "Hackathon project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sanicatthedisco/meetup.git"
+  },
+  "author": "Jared Lenn, Jacob Kerr, Jeffrey Munsell, Kai Turanski",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sanicatthedisco/meetup/issues"
+  },
+  "homepage": "https://github.com/sanicatthedisco/meetup#readme"
+}
