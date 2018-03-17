@@ -24,7 +24,7 @@ var foundFriend;
 var clients = [];
 
 io.on("connection", function(socket) {
-    console.log("A user has connectd with the id of " + socket.id);
+    console.log("A user has connected with the id of " + socket.id);
     clients.push(socket);
     socket.loggedIn = false;
     socket.friends = [];
@@ -36,6 +36,7 @@ io.on("connection", function(socket) {
     });
     
     socket.on("login request", function(credentials) {
+        socket.location = credentials.location;
         con.query("SELECT * FROM login_info", function(err, result, fields) {
             if (err) throw err;
             
@@ -82,9 +83,11 @@ io.on("connection", function(socket) {
             if (clients[i].loggedIn) {
                 console.log(clients[i].username);
                 console.log(data.friendName);
-                if (clients[i].username == data.friendName && socket.loggedIn) {
+                if (clients[i].username == data.friendName && socket.loggedIn && socket.friends.indexOf(data.friendName) == -1) {
                     foundFriend = true;
                     console.log("added " + data.friendName);
+                    socket.friends.push(data.friendName);
+                    clients[i].friends.push(socket.username);
                     
                     //insert friend into sql database
                     var sql = "INSERT INTO friends (username, friend) VALUES ('" + socket.username + "','" + data.friendName + "')";
@@ -96,15 +99,21 @@ io.on("connection", function(socket) {
                     con.query(sql, function (err, result) {
                         if (err) throw err;
                     });
+                    
+                    clients[i].emit("update friends", clients[i].friends);
                 }
             }
         }
+        
+        socket.emit("update friends", socket.friends);
     });
     
     socket.on("add to group", function(friendUsername) {
         socket.inGroup = true;
         var friendSocket = getSocket(friendUsername, clients);
-        if (!(friendSocket in socket.group) && !friendSocket.inGroup) {
+        console.log(friendSocket.username);
+        console.log(socket.group.map(s => s.username));
+        if (friendSocket != null && socket.group.indexOf(friendSocket) == -1 && !friendSocket.inGroup) {
             for (var i = 0; i < socket.group.length; i ++) {
                 friendSocket.group.push(socket.group[i]); //add all members of group to friendSocket's group
                 socket.group[i].group.push(friendSocket); //add friendSocket to all group member's groups
@@ -112,21 +121,28 @@ io.on("connection", function(socket) {
             friendSocket.group.push(socket); //add myself to friendSocket's group (because groups dont include the socket)
             socket.group.push(friendSocket); //add friendSocket to my group
         } else {
-            console.log("Tried to add a socket to a group where it already was or socket is already in group");
+            console.log("Tried to add a socket to a group where it already was or socket is already in group, or socket was not connected at the time.");
         }
         
         for (var i = 0; i < socket.group.length; i ++) {
             socket.group[i].emit("update group");
         }
+        socket.emit("update group");
     });
     
     socket.on("group info request", function() {
-        socket.emit("group info", socket.group); 
+        var groupinfo = [];
+        for (var i = 0; i < socket.group.length; i ++) {
+            groupinfo.push({username: socket.group[i].username, location: socket.group[i].location});
+        }
+        socket.emit("group info", groupinfo); 
     });
 });
 
 function getSocket(username, sockets) {
     for (var i = 0; i < sockets.length; i ++) {
+        //console.log(sockets[i].username);
+        //console.log(username);
         if (sockets[i].loggedIn) {
             if (sockets[i].username == username) {
                 return sockets[i];

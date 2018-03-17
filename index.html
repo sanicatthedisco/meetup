@@ -14,8 +14,11 @@
     </head>
     <body>
         <h1>MeetUp</h1>
+        
         <input type="text" id="user">
         <input type="password" id="password">
+        
+        <button onclick="deleteMarkers()">delete</button>
         
         <button id="submit-button" onclick="submitLogin()">Submit login</button>
         <p id="error" hidden></p>
@@ -31,7 +34,8 @@
         
         <p>Group:</p>
         <ul id="group-list"></ul>
-
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="/socket.io/socket.io.js"></script>
         <script src="map.js"></script>
         <script src="client.js"></script>

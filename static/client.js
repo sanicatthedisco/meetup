@@ -12,7 +12,7 @@ var friends = document.getElementById("friend-list");
 var group = document.getElementById("group-list");
 
 function submitLogin() {
-    socket.emit("login request", {username: userfield.value, password: passfield.value});
+    socket.emit("login request", {username: userfield.value, password: passfield.value, location: myLocation});
 }
 
 function addFriend() {
@@ -33,7 +33,7 @@ function updateFriendList(friendList) {
         text = document.createTextNode(friendList[i]);
         
         button = document.createElement("button");
-        button.onclick = function() {addToGroup(friendList[i]);};
+        button.setAttribute("onClick", "javascript: addToGroup('" + friendList[i] + "');");
         button.innerHTML = "Add to group";
         
         li.appendChild(text);
@@ -54,8 +54,8 @@ function updateGroup(groupMembers) {
     }
 }
 
-function addToGroup(friend) {
-    socket.emit("add to group", friend);
+function addToGroup(username) {
+    socket.emit("add to group", username);
 }
 
 socket.on("login success", function(data) {
@@ -76,9 +76,42 @@ socket.on("login failure", function(data) {
 });
 
 socket.on("update group", function () {
-   socket.emit("group info request"); 
+    console.log("sending request for group info");
+    socket.emit("group info request"); 
+});
+
+socket.on("update friends", function (friendList) {
+    updateFriendList(friendList);
 });
 
 socket.on("group info", function(group) {
-   updateGroup(group); 
+    updateGroup(group.map(s => s.username));
+    
+    locations = group.map(s => s.location);
+    locations.push(myLocation);
+    deleteMarkers();
+    for (var i = 0; i < locations.length; i ++) {
+        addRedMarker(locations[i]);
+    } 
+    var centroid = getCentroid(locations)
+    $.getJSON('https://roads.googleapis.com/v1/nearestRoads?points=' + centroid.lat + ',' + centroid.lng + '&key=AIzaSyDL6o7CtQ4z8bruFgK2EvhYWgHPTdfU6gw', function(data) {
+        centroidRoadId = data["snappedPoints"][0]["placeId"];
+        centroidRoadLocation = {lat: data["snappedPoints"][0]["location"]["latitude"], lng: data["snappedPoints"][0]["location"]["longitude"]};
+        addBlueMarker(centroidRoadLocation);
+    });
 });
+
+function getCentroid(coords) {
+    var lats = coords.map(e => e.lat);
+    var longs = coords.map(e => e.lng);
+    console.log(longs);
+    return {lat: avg(lats), lng: avg(longs)};
+}
+
+function avg(array) {
+    var s = 0;
+    for (var i = 0; i < array.length; i ++) {
+        s = s + array[i];
+    }
+    return s / array.length;
+}
