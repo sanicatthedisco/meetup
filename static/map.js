@@ -4,7 +4,7 @@ function initMap() {
     var nyc = {lat: 40.787867, lng: -73.975370};
     var map = new google.maps.Map(document.getElementById("map"), {
         zoom: 12,
-        center: myLocation;
+        center: myLocation
     });
     
     createMarker(myLocation, map);
