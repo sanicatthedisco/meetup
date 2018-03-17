@@ -27,6 +27,9 @@ io.on("connection", function(socket) {
     console.log("A user has connectd with the id of " + socket.id);
     clients.push(socket);
     socket.loggedIn = false;
+    socket.friends = [];
+    socket.group = [];
+    socket.inGroup = false;
     
     socket.on("disconnect", function () {
         clients.splice(clients.indexOf(socket), 1);
@@ -48,9 +51,21 @@ io.on("connection", function(socket) {
             }
             
             if (loginSuccess) {
-                socket.emit("login success", {
-                    username: credentials.username,
-                    name: socket.name
+                //get user's friends
+                var sql = "SELECT friend FROM friends WHERE username = '" + credentials.username + "'";
+                con.query(sql, function(err, result) {
+                    if (err) throw err;
+                    for (var i = 0; i < result.length; i ++) {
+                        socket.friends.push(result[i]["friend"]);
+                    }
+                    
+                    //send info to client (inside of query so it waits for completion)
+                    socket.emit("login success", {
+                        username: credentials.username,
+                        name: socket.name,
+                        friends: socket.friends
+
+                    });
                 });
             } else {
                 socket.emit("login failure", {
@@ -76,11 +91,50 @@ io.on("connection", function(socket) {
                     con.query(sql, function (err, result) {
                         if (err) throw err;
                     });
+                    //do reverse for other friend
+                    var sql = "INSERT INTO friends (username, friend) VALUES ('" + data.friendName + "','" + socket.username + "')";
+                    con.query(sql, function (err, result) {
+                        if (err) throw err;
+                    });
                 }
             }
         }
     });
+    
+    socket.on("add to group", function(friendUsername) {
+        socket.inGroup = true;
+        var friendSocket = getSocket(friendUsername, clients);
+        if (!(friendSocket in socket.group) && !friendSocket.inGroup) {
+            for (var i = 0; i < socket.group.length; i ++) {
+                friendSocket.group.push(socket.group[i]); //add all members of group to friendSocket's group
+                socket.group[i].group.push(friendSocket); //add friendSocket to all group member's groups
+            }
+            friendSocket.group.push(socket); //add myself to friendSocket's group (because groups dont include the socket)
+            socket.group.push(friendSocket); //add friendSocket to my group
+        } else {
+            console.log("Tried to add a socket to a group where it already was or socket is already in group");
+        }
+        
+        for (var i = 0; i < socket.group.length; i ++) {
+            socket.group[i].emit("update group");
+        }
+    });
+    
+    socket.on("group info request", function() {
+        socket.emit("group info", socket.group); 
+    });
 });
+
+function getSocket(username, sockets) {
+    for (var i = 0; i < sockets.length; i ++) {
+        if (sockets[i].loggedIn) {
+            if (sockets[i].username == username) {
+                return sockets[i];
+            }
+        }
+    }
+    return null;
+}
 
 //sql stuff
 
