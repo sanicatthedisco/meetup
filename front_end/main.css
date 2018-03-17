@@ -54,17 +54,22 @@ input {
 
 #group {
   position: fixed;
-  bottom:40%;
-  right: 10%;
-  border: 2px solid black;
+  bottom: 40%;
+  right: 5%;
   border-radius: 3px;
   background-color: #e2edff;
-  padding: 3px;
-
+  padding: 5px;
+  list-style-position: outside;
 }
 
 #group li {
   border-radius: 2px;
-  background-color: #0053d8;
-  color: #77d3f7;
+  /*background-color: #0053d8;*/
+  color: #0053d8;
+  position: relative;
+  right: 50%;
+}
+
+#group h3 {
+  text-align: center;
 }
