@@ -9,11 +9,16 @@ ul {
 }
 
 #maintitle {
+    background-color:#e2edff;
+    margin:0px;
+    padding:4px;
+    font-size:50px;
     text-align:center;
-    color:#77d3f7;
+    color:royalblue;
 }
 
 form {
+    font-size:18px;
     display:inline;
 }
 
@@ -29,4 +34,8 @@ a {
 
 #addfriendsform {
     float:right;
+}
+
+input {
+    border:1px solid black;
 }
