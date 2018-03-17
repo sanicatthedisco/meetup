@@ -9,12 +9,13 @@ ul {
 }
 
 #maintitle {
-    background-color:#e2edff;
+    box-shadow: inset 0 0 0 1000px rgba(226,237,255,.6);
+    background-image:url(https://i0.wp.com/briffly.com/wp-content/uploads/Google-Maps.jpg?fit=2502%2C1313&ssl=1);
     margin:0px;
     padding:4px;
     font-size:50px;
     text-align:center;
-    color:royalblue;
+    color:#0053d8;
 }
 
 form {
@@ -53,7 +54,7 @@ input {
 
 #group {
   position: fixed;
-  bottom: 40%;
+  bottom:40%;
   right: 10%;
   border: 2px solid black;
   border-radius: 3px;
