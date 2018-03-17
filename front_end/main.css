@@ -47,6 +47,9 @@ a {
 #addfriendsform {
     float:right;
 }
+#username,#password,#addfriend {
+  border-radius: 10px;
+}
 
 input {
     border:1px solid black;
@@ -73,10 +76,13 @@ input {
   position:absolute;
   top 0;
   right 0;
-  border-radius:15px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
   background-color: #77d3f7;
   padding: 10px;
   list-style-position: outside;
+  height: 210px;
+  overflow: hidden;
 }
 
 #group p,#friends p {
@@ -90,14 +96,14 @@ input {
 
 #groupcontainer {
     position:absolute;
-    right: 100px;
-    top: 22%;
+    right: 20px;
+    top: 30%;
 }
 
 #friendscontainer {
     position:absolute;
     left: 15px;
-    top: 22%;
+    top: 30%;
 }
 
 #friends button {
@@ -125,6 +131,8 @@ input {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 .checkcontainer input {
