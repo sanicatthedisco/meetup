@@ -6,8 +6,14 @@ var submitButton = document.getElementById("submit-button");
 var loginText = document.getElementById("login-text");
 var errorText = document.getElementById("error");
 
+var friendfield = document.getElementById("friend");
+
 function submitLogin() {
     socket.emit("login request", {username: userfield.value, password: passfield.value});
+}
+
+function addFriend() {
+    socket.emit("add friend request", {friendName: friendfield.value});
 }
 
 function remove(element) {
