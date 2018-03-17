@@ -15,25 +15,26 @@
         <h1 id="maintitle">MeetUp</h1>
     </header>
     <nav id="navbar">
-        <form id="login">
-            <label for="username">Login:</label>
+        <div id="login" class="form">
+            <label for="username" id="label">Login:</label>
             <input id="username" type="text" name="username" required placeholder=" Username">
             <input id="password" type="password" name="password" required placeholder=" Password">
-            <input type="submit" value="Go" action="" target="_self">
-        </form>
+            <button id="submit" onclick="submitLogin()">Go</button>
+            <p id="error" hidden></p>
+            <p id="login-text" hidden></p>
+        </div>
 
-        <form id="addfriendsform">
-            <label>Add Friends:</label>
-            <input id="addfriend" type="text" name="add friend box" required>
-            <input type="submit" value="Go" action="" target="_self">
-        </form>
+        <div id="addfriendsform" class="form">
+            <input id="friend" type="text" name="add friend box" required>
+            <button id="add-friend" onclick="addFriend()">Add friend</button>
+        </div>
 
     </nav>
     <div id="map">
         <img src="https://i0.wp.com/briffly.com/wp-content/uploads/Google-Maps.jpg?fit=2502%2C1313&ssl=1">
     </div>
 
-    <div id="groupcontainer">
+    <div id="groupcontainer" hidden>
 
     <label class="checkcontainer">Group
       <input id="grouptoggle" type="checkbox">
@@ -41,24 +42,12 @@
     </label>
 
     <section id="group">
-        <ul>
-            <li>
-                <p>aelloHEL</p>
-            </li>
-            <li>
-                <p>Hello</p>
-            </li>
-            <li>
-                <p>Hello</p>
-            </li>
-            <li>
-                <p>Hello</p>
-            </li>
+        <ul id="group-list">
         </ul>
     </section>
     </div>
 
-    <div id="friendscontainer">
+    <div id="friendscontainer" hidden >
 
     <label class="checkcontainer">Friends
     <input id="friendstoggle" type="checkbox">
@@ -67,21 +56,7 @@
 
     <section id="friends">
 
-        <ul>
-            <li>
-                <p>aaaaJi <button>+</button></p>
-            </li>
-            <li>
-                <p>Hello <button>+</button></p>
-            </li>
-            <li>
-                <p>Hello <button>+</button></p>
-
-            </li>
-            <li>
-                <p>Hello <button>+</button></p>
-
-            </li>
+        <ul id="friend-list">
         </ul>
     </section>
     </div>
@@ -119,9 +94,13 @@
         </table>
     </section>
 
-    <footer>
-
-    </footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="map.js"></script>
+    <script src="client.js"></script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDL6o7CtQ4z8bruFgK2EvhYWgHPTdfU6gw&callback=initMap">
+    </script>
 
 </body>
 
