@@ -2,9 +2,20 @@
   font-family: 'Merriweather Sans', sans-serif;
 }
 
+span {
+    font-size: 20px;
+    display: block;
+}
+
+span#rating {
+    font-size: 20px;
+    color: #777;
+}
+
 body {
     padding: 0px;
     margin: 0px;
+    background-color: rgba(226,237,255);
 }
 
 section {
@@ -19,7 +30,7 @@ ul {
 }
 
 #maintitle {
-    box-shadow: inset 0 0 0 1000px rgba(226,237,255,.6);
+    box-shadow: inset 0 0 0 1000px rgba(226,237,255);
     margin:0px;
     padding:4px;
     font-size:50px;
@@ -66,13 +77,17 @@ input, button {
 }
 
 #places {
-  bottom:0;
+  bottom:10px;
   padding: 5px 0 5px 0 0;
-  width:100%;
+    width: 90%;
+    margin: 0 auto;
+    margin-left: 20px;
 }
 
 #placestable {
     width:100%;
+    margin: 0 auto;
+    text-align: center;
 }
 
 #group, #friends {
@@ -98,7 +113,7 @@ input, button {
 
 #groupcontainer {
     position:absolute;
-    right: 20px;
+    right: 170px;
     top: 30%;
 }
 

@@ -14,6 +14,9 @@ var group = document.getElementById("group-list");
 
 var friendContainer = document.getElementById("friendscontainer");
 var groupContainer = document.getElementById("groupcontainer");
+var placesTable = document.getElementById("placestable");
+
+var places;
 
 function submitLogin() {
     socket.emit("login request", {username: userfield.value, password: passfield.value, location: myLocation});
@@ -62,6 +65,35 @@ function updateGroup(groupMembers) {
     }
 }
 
+function updatePlaces(places) {
+    placesTable.innerHTML = '';
+    var tr1 = document.createElement("tr");
+    var tr2 = document.createElement("tr");
+    var trs = [tr1, tr2];
+    
+    var tds = [];
+    var td;
+    var inner;
+    for (var i = 0; i < 8; i ++) {
+        td = document.createElement("td");
+        inner = document.createElement("p");
+        console.log(places);
+        console.log(places[3]);
+        inner.innerHTML = "<span id='name'>"+places[i].name+"</span><span id='rating'>"+places[i].rating+"</span>";
+        td.appendChild(inner);
+        
+        if (i < 4) {
+            tr1.appendChild(td);
+        } else {
+            tr2.appendChild(td);
+        }
+    }
+    
+    placesTable.appendChild(tr1);
+    placesTable.appendChild(tr2);
+    
+}
+
 function addToGroup(username) {
     socket.emit("add to group", username);
 }
@@ -107,6 +139,24 @@ socket.on("group info", function(group) {
         centroidRoadId = data["snappedPoints"][0]["placeId"];
         centroidRoadLocation = {lat: data["snappedPoints"][0]["location"]["latitude"], lng: data["snappedPoints"][0]["location"]["longitude"]};
         addBlueMarker(centroidRoadLocation);
+        
+        var request = {
+            location: centroidRoadLocation,
+            radius: 500,
+            type: ["restaurant"]
+        };
+
+        places = [];
+
+        service.nearbySearch(request, function (results, status) {
+            if (status == google.maps.places.PlacesServiceStatus.OK) {
+                for (var i = 0; i < 8; i ++) {
+                    places.push({location: results[i].geometry.location, name: results[i].name, rating: results[i].rating});
+                }
+            }
+            console.log(places);
+            updatePlaces(places);
+        });
     });
 });
 

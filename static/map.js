@@ -17,6 +17,8 @@ var centroidRoadLocation;
 var map;
 var markers = [];
 
+var service;
+
 function initMap() {
     var nyc = {lat: 40.787867, lng: -73.975370};
     map = new google.maps.Map(document.getElementById("map"), {
@@ -30,6 +32,26 @@ function initMap() {
         createMarker(this.get("redmarkerloc"), map, "red");
     })
     createMarker(myLocation, map, "red");
+    
+    service = new google.maps.places.PlacesService(map);
+    
+    var request = {
+        location: myLocation,
+        radius: 500,
+        type: ["restaurant"]
+    };
+
+    places = [];
+
+    service.nearbySearch(request, function (results, status) {
+        if (status == google.maps.places.PlacesServiceStatus.OK) {
+            for (var i = 0; i < 8; i ++) {
+                places.push({location: results[i].geometry.location, name: results[i].name, rating: results[i].rating});
+            }
+        }
+        console.log(places);
+        updatePlaces(places);
+    });
 }
 
 
