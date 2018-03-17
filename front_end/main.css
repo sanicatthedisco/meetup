@@ -69,17 +69,17 @@ input {
     width:100%;
 }
 
-#group {
+#group,#friends {
   position: fixed;
   top: 32%;
-  right: 4%;
-  border-radius: 3px;
+  left: 92%;
+  border-radius:15px;
   background-color: #77d3f7;
   padding: 10px;
   list-style-position: outside;
 }
 
-#group p {
+#group p,#friends p {
   /*background-color: #0053d8;*/
   color: #0053d8;
   text-align: center;
@@ -88,8 +88,36 @@ input {
   padding: 5px;
 }
 
-#group h3 {
-  text-align: center;
-    margin-top:0;
+#group h3,#friends h3 {
+    text-align:center;
+    margin-top:20px;
     text-decoration:underline;
+}
+
+
+#friends {
+  display:none;
+}
+
+
+#grouptab {
+  position:absolute;
+  left:0;
+  padding:0 2px;
+  background-color: #77d3f7; 
+  border-radius: 5px;
+  font-size:15px;
+  border:1px dashed black;
+}
+
+
+#friendtab {
+  position:absolute;
+  right:0;
+  padding:0 2px;
+  background-color: #77d3f7; 
+  z-index:0;
+  border-radius:5px;
+  font-size:15px;
+  border:1px dashed black;
 }
